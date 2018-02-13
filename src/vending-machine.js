@@ -16,6 +16,8 @@ function VendingMachine() {
             credit += .10;
         } else if(coin === 'QUARTER') {
             credit += .25;
+        } else {
+            credit += 0;
         }
     };
 
