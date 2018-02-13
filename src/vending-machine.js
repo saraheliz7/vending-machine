@@ -1,5 +1,7 @@
 function VendingMachine() {
     let credit = 0;
+    let returnedCoins = [];
+
 
     this.checkDisplay = () => {
         if(credit === 0) {
@@ -18,8 +20,15 @@ function VendingMachine() {
             credit += .25;
         } else {
             credit += 0;
+            returnedCoins.push(coin);
         }
     };
+
+    this.getReturnedCoins = () => {
+        let currentReturnedCoins = returnedCoins;
+        returnedCoins =[];
+        return currentReturnedCoins;
+    }
 
 }
 

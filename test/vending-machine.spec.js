@@ -47,4 +47,12 @@ describe("The vending machine", function() {
         expect(vendingMachine.checkDisplay()).to.equal("0.25");
     });
 
+    it("should return invalid coins to the coin return", function() {
+        const vendingMachine = new VendingMachine();
+        vendingMachine.insertCoin('QUARTER')
+        vendingMachine.insertCoin('PENNY');
+        expect(vendingMachine.checkDisplay()).to.equal("0.25");
+        expect(vendingMachine.getReturnedCoins()).to.deep.equal(['PENNY']);
+    });
+
 });
