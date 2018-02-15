@@ -10,7 +10,6 @@ function VendingMachine() {
     ];
 
 
-
     this.checkDisplay = () => {
         if(messages.length > 0) {
             let currentMessage = messages[0];
@@ -19,7 +18,7 @@ function VendingMachine() {
         } else if(credit === 0) {
             return 'INSERT COIN';
         } else {
-            return credit.toFixed(2);
+            return "$" + credit.toFixed(2);
         }
     };
 
@@ -49,15 +48,14 @@ function VendingMachine() {
     this.selectProduct = (productIndex) => {
         let price = products[productIndex].price.toFixed(2);
         if(credit < products[productIndex].price) {
-            messages.push('PRICE ' + price);
+            messages.push('PRICE $' + price);
+        } else if(credit === products[productIndex].price) {
+            messages.push('THANK YOU');
+            credit = 0;
         }
-
-    }
-
+    };
 
 }
-
-
 
 
 module.exports = VendingMachine;
