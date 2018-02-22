@@ -109,5 +109,26 @@ describe("The vending machine", function() {
         expect(vendingMachine.getReturnedCoins()).to.deep.equal(['DIME']);
     });
 
+    it("will return change when credit is more than price of selected product", function() {
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.selectProduct(2);
+        expect(vendingMachine.checkDisplay()).to.equal('THANK YOU');
+        expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
+        expect(vendingMachine.getReturnedCoins()).to.deep.equal(['QUARTER', 'DIME']);
+    });
+    it("will return change when credit is more than price of selected product", function() {
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('DIME');
+        vendingMachine.insertCoin('DIME');
+        vendingMachine.selectProduct(2);
+        expect(vendingMachine.checkDisplay()).to.equal('THANK YOU');
+        expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
+        expect(vendingMachine.getReturnedCoins()).to.deep.equal(['NICKLE']);
+    });
+
 
 });

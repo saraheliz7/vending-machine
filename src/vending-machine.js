@@ -68,12 +68,23 @@ function VendingMachine() {
     };
 
     let makeChange = (changeToMake) => {
-        let dimes = Math.floor(changeToMake / 10);
+        let quarters = Math.floor(changeToMake / 25);
+        let quartersRemainder = changeToMake % 25;
 
-        if(dimes) {
-            returnedCoins.push('DIME');
+        let dimes = Math.floor(quartersRemainder / 10);
+        let dimesRemainder = quartersRemainder % 10;
+
+        let nickles = Math.floor(dimesRemainder / 5);
+
+        for(let i = quarters; i > 0; i--) {
+                returnedCoins.push('QUARTER');
         }
-
+        for(let i = dimes; i > 0; i--) {
+                returnedCoins.push('DIME');
+        }
+        for(let i =nickles; i > 0; i--) {
+                returnedCoins.push('NICKLE');
+        }
     };
 
 
