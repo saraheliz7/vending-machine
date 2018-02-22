@@ -70,6 +70,14 @@ describe("The vending machine", function() {
             expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
         });
 
+        it("PRICE and the price of selected item and then available credit when coins are inserted but " +
+            "credit still isn't enough", function() {
+            vendingMachine.insertCoin('DIME');
+            vendingMachine.selectProduct(0);
+            expect(vendingMachine.checkDisplay()).to.equal('PRICE $1.00');
+            expect(vendingMachine.checkDisplay()).to.equal('$0.10');
+        });
+
         it("THANK YOU after enough money has been inserted and the product is dispensed ", function() {
             vendingMachine.insertCoin('QUARTER');
             vendingMachine.insertCoin('QUARTER');
@@ -89,14 +97,16 @@ describe("The vending machine", function() {
             expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
         });
 
-        it("PRICE and the price of selected item and then available credit when coins are inserted but " +
-            "credit still isn't enough", function() {
-            vendingMachine.insertCoin('DIME');
-            vendingMachine.selectProduct(0);
-            expect(vendingMachine.checkDisplay()).to.equal('PRICE $1.00');
-            expect(vendingMachine.checkDisplay()).to.equal('$0.10');
-        });
+    });
 
+    it("will return change when credit is more than price of selected product", function() {
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.selectProduct(2);
+        expect(vendingMachine.checkDisplay()).to.equal('THANK YOU');
+        expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
+        expect(vendingMachine.getReturnedCoins()).to.deep.equal(['DIME']);
     });
 
 
