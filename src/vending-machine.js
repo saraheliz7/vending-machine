@@ -87,6 +87,12 @@ function VendingMachine() {
         }
     };
 
+    this.coinReturn = () => {
+        if(credit > 0) {
+            makeChange(credit);
+        }
+    };
+
 
 
 }
