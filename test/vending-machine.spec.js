@@ -158,6 +158,15 @@ describe("The vending machine", function() {
             vendingMachine.coinReturn();
             expect(vendingMachine.getReturnedCoins()).to.deep.equal(['QUARTER', 'NICKLE']);
         });
+
+        it("coins inserted in vending machine when the coin return button is pressed and " +
+            "then display INSERT COIN", function() {
+            vendingMachine.insertCoin('NICKLE');
+            vendingMachine.insertCoin('QUARTER');
+            vendingMachine.coinReturn();
+            expect(vendingMachine.getReturnedCoins()).to.deep.equal(['QUARTER', 'NICKLE']);
+            expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
+        });
     });
 
 
