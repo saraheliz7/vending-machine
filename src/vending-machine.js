@@ -1,4 +1,4 @@
-function VendingMachine() {
+function VendingMachine(colaQuantity, chipsQuantity, candyQuantity) {
     let credit = 0;
     let returnedCoins = [];
     let messages = [];
@@ -8,6 +8,12 @@ function VendingMachine() {
         {name: 'COLA', price: 100},
         {name: 'CHIPS', price: 50},
         {name: 'CANDY', price: 65}
+    ];
+
+    let inventory = [
+        {product: products[0].name, quantity: colaQuantity},
+        {product: products[1].name, quantity: chipsQuantity},
+        {product: products[2].name, quantity: candyQuantity}
     ];
 
     this.checkDisplay = () => {
@@ -55,7 +61,9 @@ function VendingMachine() {
 
     this.selectProduct = (productIndex) => {
         let price = (products[productIndex].price / 100).toFixed(2);
-        if(credit < products[productIndex].price) {
+        if(inventory[productIndex].quantity === 0) {
+            messages.push('SOLD OUT');
+        } else if(credit < products[productIndex].price) {
             messages.push('PRICE $' + price);
         } else if(credit === products[productIndex].price) {
             messages.push('THANK YOU');
@@ -94,6 +102,7 @@ function VendingMachine() {
         }
 
     };
+
 
 
 

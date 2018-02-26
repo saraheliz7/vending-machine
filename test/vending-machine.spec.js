@@ -168,8 +168,31 @@ describe("The vending machine", function() {
             expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
         });
     });
+});
 
+describe('The vending machine', function() {
+    it("will display SOLD OUT when selected product is out of stock", function() {
+        let vendingMachine = new VendingMachine(2, 0, 1);
+        vendingMachine.selectProduct(1);
+        expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
+    });
 
+    it("will display SOLD OUT, then INSERT COIN when selected product is out of stock and " +
+        "there is no credit", function() {
+        let vendingMachine = new VendingMachine(2, 0, 1);
+        vendingMachine.selectProduct(1);
+        expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
+        expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
+    });
 
+    it("will display SOLD OUT then credit when selected product is out of stock and there is " +
+        "credit in the machine", function() {
+        let vendingMachine = new VendingMachine(2, 0, 1);
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.selectProduct(1);
+        expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
+        expect(vendingMachine.checkDisplay()).to.equal('$0.50');
+    });
 
 });
