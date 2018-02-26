@@ -195,4 +195,19 @@ describe('The vending machine', function() {
         expect(vendingMachine.checkDisplay()).to.equal('$0.50');
     });
 
+    it("will display SOLD OUT when selected product changes from being in stock to out " +
+        "of stock and the credit is equal to price", function() {
+        let vendingMachine = new VendingMachine(2, 1, 1);
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.selectProduct(1);
+        expect(vendingMachine.checkDisplay()).to.equal('THANK YOU');
+        expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.selectProduct(1);
+        expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
+        expect(vendingMachine.checkDisplay()).to.equal('$0.50');
+    });
+
 });

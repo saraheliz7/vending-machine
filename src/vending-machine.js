@@ -68,6 +68,7 @@ function VendingMachine(colaQuantity, chipsQuantity, candyQuantity) {
         } else if(credit === products[productIndex].price) {
             messages.push('THANK YOU');
             credit = 0;
+            inventory[productIndex].quantity -= 1;
         } else if(credit > products[productIndex].price) {
             messages.push('THANK YOU');
             change = (credit - products[productIndex].price);
