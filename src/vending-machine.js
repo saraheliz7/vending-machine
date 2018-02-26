@@ -1,8 +1,8 @@
 function VendingMachine(colaQuantity, chipsQuantity, candyQuantity) {
     let credit = 0;
+    let change = 0;
     let returnedCoins = [];
     let messages = [];
-    let change = 0;
 
     let products = [
         {name: 'COLA', price: 100},
@@ -52,7 +52,6 @@ function VendingMachine(colaQuantity, chipsQuantity, candyQuantity) {
             change = 0;
             return returnedCoins;
         }
-
     };
 
     this.displayProducts = () => {
@@ -61,38 +60,35 @@ function VendingMachine(colaQuantity, chipsQuantity, candyQuantity) {
 
     this.selectProduct = (productIndex) => {
         let price = (products[productIndex].price / 100).toFixed(2);
+        let productPrice = products[productIndex].price;
+
         if(inventory[productIndex].quantity === 0) {
             messages.push('SOLD OUT');
-        } else if(credit < products[productIndex].price) {
+        } else if(credit < productPrice) {
             messages.push('PRICE $' + price);
-        } else if(credit === products[productIndex].price) {
+        } else if(credit === productPrice) {
             messages.push('THANK YOU');
             credit = 0;
             inventory[productIndex].quantity -= 1;
-        } else if(credit > products[productIndex].price) {
+        } else if(credit > productPrice) {
             messages.push('THANK YOU');
-            change = (credit - products[productIndex].price);
+            change = (credit - productPrice);
             credit = 0;
         }
     };
 
     let makeChange = (changeToMake) => {
-        let quarters = Math.floor(changeToMake / 25);
-        let quartersRemainder = changeToMake % 25;
-
-        let dimes = Math.floor(quartersRemainder / 10);
-        let dimesRemainder = quartersRemainder % 10;
-
-        let nickles = Math.floor(dimesRemainder / 5);
-
-        for(let i = quarters; i > 0; i--) {
+        while(changeToMake > 0) {
+            if((changeToMake - 25) >= 0) {
                 returnedCoins.push('QUARTER');
-        }
-        for(let i = dimes; i > 0; i--) {
+                changeToMake -= 25;
+            } else if((changeToMake - 10) >= 0) {
                 returnedCoins.push('DIME');
-        }
-        for(let i =nickles; i > 0; i--) {
+                changeToMake -= 10;
+            } else if((changeToMake - 5) >= 0) {
                 returnedCoins.push('NICKLE');
+                changeToMake -= 5;
+            }
         }
     };
 
@@ -103,11 +99,5 @@ function VendingMachine(colaQuantity, chipsQuantity, candyQuantity) {
         }
 
     };
-
-
-
-
 }
-
-
 module.exports = VendingMachine;
