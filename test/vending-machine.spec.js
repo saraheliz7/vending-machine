@@ -171,43 +171,51 @@ describe("The vending machine", function() {
 });
 
 describe('The vending machine', function() {
-    it("will display SOLD OUT when selected product is out of stock", function() {
-        let vendingMachine = new VendingMachine(2, 0, 1);
-        vendingMachine.selectProduct(1);
-        expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
-    });
 
-    it("will display SOLD OUT, then INSERT COIN when selected product is out of stock and " +
-        "there is no credit", function() {
-        let vendingMachine = new VendingMachine(2, 0, 1);
-        vendingMachine.selectProduct(1);
-        expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
-        expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
-    });
+    describe('will display', function() {
 
-    it("will display SOLD OUT then credit when selected product is out of stock and there is " +
-        "credit in the machine", function() {
-        let vendingMachine = new VendingMachine(2, 0, 1);
-        vendingMachine.insertCoin('QUARTER');
-        vendingMachine.insertCoin('QUARTER');
-        vendingMachine.selectProduct(1);
-        expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
-        expect(vendingMachine.checkDisplay()).to.equal('$0.50');
-    });
+        it("SOLD OUT when selected product is out of stock", function() {
+            let vendingMachine = new VendingMachine(2, 0, 1);
+            vendingMachine.selectProduct(1);
+            expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
+        });
 
-    it("will display SOLD OUT when selected product changes from being in stock to out " +
-        "of stock and the credit is equal to price", function() {
-        let vendingMachine = new VendingMachine(2, 1, 1);
-        vendingMachine.insertCoin('QUARTER');
-        vendingMachine.insertCoin('QUARTER');
-        vendingMachine.selectProduct(1);
-        expect(vendingMachine.checkDisplay()).to.equal('THANK YOU');
-        expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
-        vendingMachine.insertCoin('QUARTER');
-        vendingMachine.insertCoin('QUARTER');
-        vendingMachine.selectProduct(1);
-        expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
-        expect(vendingMachine.checkDisplay()).to.equal('$0.50');
-    });
+        it("SOLD OUT, then INSERT COIN when selected product is out of stock and " +
+            "there is no credit", function() {
+            let vendingMachine = new VendingMachine(2, 0, 1);
+            vendingMachine.selectProduct(1);
+            expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
+            expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
+        });
 
+        it("SOLD OUT then credit when selected product is out of stock and there is " +
+            "credit in the machine", function() {
+            let vendingMachine = new VendingMachine(2, 0, 1);
+            vendingMachine.insertCoin('QUARTER');
+            vendingMachine.insertCoin('QUARTER');
+            vendingMachine.selectProduct(1);
+            expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
+            expect(vendingMachine.checkDisplay()).to.equal('$0.50');
+        });
+
+        it("SOLD OUT when selected product changes from being in stock to out " +
+            "of stock and the credit is equal to price", function() {
+            let vendingMachine = new VendingMachine(2, 1, 1);
+            vendingMachine.insertCoin('QUARTER');
+            vendingMachine.insertCoin('QUARTER');
+            vendingMachine.selectProduct(1);
+            expect(vendingMachine.checkDisplay()).to.equal('THANK YOU');
+            expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
+            vendingMachine.insertCoin('QUARTER');
+            vendingMachine.insertCoin('QUARTER');
+            vendingMachine.selectProduct(1);
+            expect(vendingMachine.checkDisplay()).to.equal('SOLD OUT');
+            expect(vendingMachine.checkDisplay()).to.equal('$0.50');
+        });
+
+        it("EXACT CHANGE ONLY when there isn't any money in the machine to make change", function() {
+           let vendingMachine = new VendingMachine(5, 5, 5, 0, 0, 0);
+           expect(vendingMachine.checkDisplay()).to.equal('EXACT CHANGE ONLY');
+        });
+    });
 });

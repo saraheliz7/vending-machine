@@ -1,4 +1,5 @@
-function VendingMachine(colaQuantity, chipsQuantity, candyQuantity) {
+function VendingMachine(colaQuantity, chipsQuantity, candyQuantity,
+                        quarterQuantity, dimeQuantity, nickleQuantity) {
     let credit = 0;
     let change = 0;
     let returnedCoins = [];
@@ -16,7 +17,20 @@ function VendingMachine(colaQuantity, chipsQuantity, candyQuantity) {
         {product: products[2].name, quantity: candyQuantity}
     ];
 
+    let availableCoins = [
+        {coin: 'QUARTER', quantity: quarterQuantity},
+        {coin: 'DIME', quantity: dimeQuantity},
+        {coin: 'NICKLE', quantity: nickleQuantity}
+    ];
+
+    let exactChange = () => {
+        if(quarterQuantity === 0 && dimeQuantity === 0 && nickleQuantity === 0) {
+            messages.push('EXACT CHANGE ONLY');
+        }
+    };
+
     this.checkDisplay = () => {
+        exactChange();
         if(messages.length > 0) {
             let currentMessage = messages[0];
             messages.splice(0, 1);
@@ -32,10 +46,13 @@ function VendingMachine(colaQuantity, chipsQuantity, candyQuantity) {
     this.insertCoin = (coin) => {
         if(coin === 'NICKLE') {
             credit += 5;
+            availableCoins[2].quantity += 1;
         } else if(coin === 'DIME') {
             credit += 10;
+            availableCoins[1].quantity += 1;
         } else if(coin === 'QUARTER') {
             credit += 25;
+            availableCoins[0].quantity += 1;
         } else {
             credit += 0;
             returnedCoins.push(coin);
