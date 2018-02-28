@@ -24,7 +24,8 @@ function VendingMachine(colaQuantity, chipsQuantity, candyQuantity,
     ];
 
     let exactChange = () => {
-        if(quarterQuantity === 0 && dimeQuantity === 0 && nickleQuantity === 0) {
+        if((availableCoins[1].quantity === 0 && availableCoins[2].quantity === 0) ||
+            (availableCoins[0].quantity === 0 && availableCoins[2].quantity === 0)) {
             messages.push('EXACT CHANGE ONLY');
         }
     };
@@ -99,12 +100,15 @@ function VendingMachine(colaQuantity, chipsQuantity, candyQuantity,
             if((changeToMake - 25) >= 0) {
                 returnedCoins.push('QUARTER');
                 changeToMake -= 25;
+                availableCoins[0].quantity -= 1;
             } else if((changeToMake - 10) >= 0) {
                 returnedCoins.push('DIME');
                 changeToMake -= 10;
+                availableCoins[1].quantity -= 1;
             } else if((changeToMake - 5) >= 0) {
                 returnedCoins.push('NICKLE');
                 changeToMake -= 5;
+                availableCoins[2].quantity -= 1;
             }
         }
     };
