@@ -11,21 +11,31 @@ function VendingMachine(colaQuantity, chipsQuantity, candyQuantity,
         {name: 'CANDY', price: 65}
     ];
 
+    let quarter = {
+        name: 'QUARTER',
+        quantity: quarterQuantity
+    };
+
+    let dime = {
+        name: 'DIME',
+        quantity: dimeQuantity
+    };
+
+    let nickle = {
+        name: 'NICKLE',
+        quantity: nickleQuantity
+    };
+
     let inventory = [
         {product: products[0].name, quantity: colaQuantity},
         {product: products[1].name, quantity: chipsQuantity},
         {product: products[2].name, quantity: candyQuantity}
     ];
 
-    let availableCoins = [
-        {coin: 'QUARTER', quantity: quarterQuantity},
-        {coin: 'DIME', quantity: dimeQuantity},
-        {coin: 'NICKLE', quantity: nickleQuantity}
-    ];
 
     let exactChange = () => {
-        if((availableCoins[1].quantity === 0 && availableCoins[2].quantity === 0) ||
-            (availableCoins[0].quantity === 0 && availableCoins[2].quantity === 0)) {
+        if((dime.quantity === 0 && nickle.quantity === 0) ||
+            (quarter.quantity === 0 && nickle.quantity === 0)) {
             messages.push('EXACT CHANGE ONLY');
         }
     };
@@ -47,13 +57,13 @@ function VendingMachine(colaQuantity, chipsQuantity, candyQuantity,
     this.insertCoin = (coin) => {
         if(coin === 'NICKLE') {
             credit += 5;
-            availableCoins[2].quantity += 1;
+            nickle.quantity += 1;
         } else if(coin === 'DIME') {
             credit += 10;
-            availableCoins[1].quantity += 1;
+            dime.quantity += 1;
         } else if(coin === 'QUARTER') {
             credit += 25;
-            availableCoins[0].quantity += 1;
+            quarter.quantity += 1;
         } else {
             credit += 0;
             returnedCoins.push(coin);
@@ -100,15 +110,15 @@ function VendingMachine(colaQuantity, chipsQuantity, candyQuantity,
             if((changeToMake - 25) >= 0) {
                 returnedCoins.push('QUARTER');
                 changeToMake -= 25;
-                availableCoins[0].quantity -= 1;
+                quarter.quantity -= 1;
             } else if((changeToMake - 10) >= 0) {
                 returnedCoins.push('DIME');
                 changeToMake -= 10;
-                availableCoins[1].quantity -= 1;
+                dime.quantity -= 1;
             } else if((changeToMake - 5) >= 0) {
                 returnedCoins.push('NICKLE');
                 changeToMake -= 5;
-                availableCoins[2].quantity -= 1;
+                nickle.quantity -= 1;
             }
         }
     };
