@@ -224,23 +224,22 @@ describe("The vending machine", function() {
             let vendingMachine = new VendingMachine(5, 5, 5, 1, 0, 0);
             expect(vendingMachine.checkDisplay()).to.equal('EXACT CHANGE ONLY');
         });
-
-        it("EXACT CHANGE ONLY when there is money in the machine but not enough " +
-            "to make change then INSERT COIN after product is purchased", function() {
-            let vendingMachine = new VendingMachine(5, 5, 5, 1, 0, 0);
-            expect(vendingMachine.checkDisplay()).to.equal('EXACT CHANGE ONLY');
-            vendingMachine.insertCoin('QUARTER');
-            vendingMachine.insertCoin('QUARTER');
-            vendingMachine.insertCoin('DIME');
-            vendingMachine.insertCoin('NICKLE');
-            vendingMachine.selectProduct(2);
-            expect(vendingMachine.checkDisplay()).to.equal('THANK YOU');
-            expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
-        });
     });
 
-    it("will not display EXACT CHANGE ONLY when there is enough money to make change in " +
-        "the machine and once there isn't enough it does display EXACT CHANGE ONLY ", function() {
+    it("stops displaying EXACT CHANGE ONLY when enough money is added to the machine", function() {
+        let vendingMachine = new VendingMachine(5, 5, 5, 1, 0, 0);
+        expect(vendingMachine.checkDisplay()).to.equal('EXACT CHANGE ONLY');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('QUARTER');
+        vendingMachine.insertCoin('DIME');
+        vendingMachine.insertCoin('NICKLE');
+        vendingMachine.selectProduct(2);
+        expect(vendingMachine.checkDisplay()).to.equal('THANK YOU');
+        expect(vendingMachine.checkDisplay()).to.equal('INSERT COIN');
+    });
+
+    it("will display EXACT CHANGE ONLY once there isn't enough money in the machine " +
+        "after a purchase ", function() {
         let vendingMachine = new VendingMachine(5, 5, 5, 1, 1, 0);
         vendingMachine.insertCoin('QUARTER');
         vendingMachine.insertCoin('QUARTER');
@@ -251,8 +250,7 @@ describe("The vending machine", function() {
         expect(vendingMachine.checkDisplay()).to.equal('EXACT CHANGE ONLY');
     });
 
-    it("ill not display EXACT CHANGE ONLY when there is enough money to make change in " +
-        "the machine and once there isn't enough it does display EXACT CHANGE ONLY", function() {
+    it("will display EXACT CHANGE ONLY if there is only one type of coin in the machine", function() {
         let vendingMachine = new VendingMachine(5, 5, 5, 0, 1, 1);
         vendingMachine.insertCoin('DIME');
         vendingMachine.insertCoin('DIME');
